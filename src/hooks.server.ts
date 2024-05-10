@@ -1,9 +1,13 @@
 import { lucia } from '$lib/server/auth';
-import type { Handle } from '@sveltejs/kit';
+import { type Handle } from '@sveltejs/kit';
 
 export const handle: Handle = async ({ event, resolve }) => {
 	const sessionId = event.cookies.get(lucia.sessionCookieName);
 	if (!sessionId) {
+		// if (event.url.pathname.startsWith('/api')) {
+		// 	return new Response(null, { status: 401 });
+		// }
+
 		event.locals.user = null;
 		event.locals.session = null;
 		return resolve(event);
